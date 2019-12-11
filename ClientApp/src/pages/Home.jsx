@@ -16,7 +16,7 @@ export default function Home() {
   }, [])
 
   const search = e => {
-    e.preventdefault()
+    e.preventDefault()
     Axios.get('/api/search?searchTerm=' + searchTerm).then(resp => {
       setFeed(resp.data)
     })
