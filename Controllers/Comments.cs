@@ -15,7 +15,7 @@ namespace musicoverflow.controllers
   {
     private readonly DatabaseContext _context;
 
-    public CommentController(DatabaseContext context)
+    public CommentsController(DatabaseContext context)
     {
       _context = context;
     }
