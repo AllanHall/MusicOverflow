@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using musicoverflow.models;
 using musicoverflow;
 using Microsoft.AspNetCore.Http;
-using Mircosoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace musicoverflow.controllers
 {
@@ -23,7 +24,7 @@ namespace musicoverflow.controllers
     [HttpGet]
     public async Task<ActionResult<List<Post>>> GetAllPosts()
     {
-      return await _context.Posts.Include(i => i.User).ToListAsync();
+      return await _context.Posts.ToListAsync();
     }
 
     [HttpPost]
@@ -34,28 +35,28 @@ namespace musicoverflow.controllers
       return post;
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<Post>> EditPost(int id, [FromBody]Post editedPost)
-    {
-      var oldPost = await _context.Posts.FirstorDefaultAsync(f => f.id == id);
-      oldPost.Title = editedPost.Title;
-      oldPost.Description = editedPost.Description;
-      await _context.SaveChangesAsync();
-      return editedPost;
-    }
+    // [HttpPut("{id}")]
+    // public async Task<ActionResult<Post>> EditPost(int id, [FromBody]Post editedPost)
+    // {
+    //   var oldPost = await _context.Posts.FirstOrDefaultAsync(f => f.id == id);
+    //   oldPost.Title = editedPost.Title;
+    //   oldPost.Description = editedPost.Description;
+    //   await _context.SaveChangesAsync();
+    //   return editedPost;
+    // }
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<Post>> DeletePost(int id)
-    {
-      var oldPost = await _context.Posts.FindAsync(id);
-      if (oldPost == null)
-      {
-        return NotFound();
-      }
+    // [HttpDelete("{id}")]
+    // public async Task<ActionResult<Post>> DeletePost(int id)
+    // {
+    //   var oldPost = await _context.Posts.FindAsync(id);
+    //   if (oldPost == null)
+    //   {
+    //     return NotFound();
+    //   }
 
-      _context.Posts.Remove(oldPost);
-      await _context.SaveChangesAsync();
-      return oldPost;
-    }
+    //   _context.Posts.Remove(oldPost);
+    //   await _context.SaveChangesAsync();
+    //   return oldPost;
+    // }
   }
 }

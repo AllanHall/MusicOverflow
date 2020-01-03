@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using musicoverflow.models;
 using musicoverflow;
 using Microsoft.AspNetCore.Http;
-using Mircosoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace musicoverflow.controllers
 {
@@ -23,38 +24,38 @@ namespace musicoverflow.controllers
     [HttpGet]
     public async Task<ActionResult<List<Comment>>> GetAllComments()
     {
-      return await _context.Comments.Include(i => i.Post).ToListAsync();
+      return await _context.Comments.ToListAsync();
     }
 
     [HttpPost]
     public async Task<ActionResult<Comment>> PostNewComment(Comment comment)
     {
-      _context.Sites.Add(comment);
+      _context.Comments.Add(comment);
       await _context.SaveChangesAsync();
       return comment;
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<Comment>> EditComment(int id, [FromBody]Comment editedComment)
-    {
-      var oldComment = await _context.Comments.FirstOrDefaultAsync(f => f.id == id);
-      oldComment.Description = editedComment.Description;
-      await _context.SaveChangesAsync();
-      return editedComment;
-    }
+    // [HttpPut("{id}")]
+    // public async Task<ActionResult<Comment>> EditComment(int id, [FromBody]Comment editedComment)
+    // {
+    //   var oldComment = await _context.Comments.FirstOrDefaultAsync(f => f.id == id);
+    //   oldComment.Description = editedComment.Description;
+    //   await _context.SaveChangesAsync();
+    //   return editedComment;
+    // }
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<Comment>> DeleteComment(int id)
-    {
-      var oldComment = await _context.Comments.FindAsync(id);
-      if (oldComment == null)
-      {
-        return NotFound();
-      }
+    // [HttpDelete("{id}")]
+    // public async Task<ActionResult<Comment>> DeleteComment(int id)
+    // {
+    //   var oldComment = await _context.Comments.FindAsync(id);
+    //   if (oldComment == null)
+    //   {
+    //     return NotFound();
+    //   }
 
-      _context.Comments.Remove(oldComment);
-      await _context.SaveChangesAsync();
-      return oldComment;
-    }
+    //   _context.Comments.Remove(oldComment);
+    //   await _context.SaveChangesAsync();
+    //   return oldComment;
+    // }
   }
 }

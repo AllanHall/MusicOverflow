@@ -24,6 +24,7 @@ export default function Home() {
 
   return (
     <div>
+      <h1>Music Overflow</h1>
       <form onSubmit={search}>
         <input
           type="search"

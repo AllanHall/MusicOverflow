@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using musicoverflow.Models;
+using musicoverflow.models;
 
 namespace musicoverflow
 {
@@ -29,8 +29,7 @@ namespace musicoverflow
       if (!optionsBuilder.IsConfigured)
       {
         var envConn = Environment.GetEnvironmentVariable("DATABASE_URL");
-#warning Be sure to update to your correct connection string to the point to the correct database
-        var conn = "server=localhost;database=SdgTemplate";
+        var conn = "server=localhost;database=MusicOverflowDatabase";
         if (envConn != null)
         {
           conn = ConvertPostConnectionToConnectionString(envConn);
@@ -46,6 +45,7 @@ namespace musicoverflow
       modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
     }
 
-    public DbSet<Thing> Things { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<Comment> Comments { get; set; }
   }
 }
